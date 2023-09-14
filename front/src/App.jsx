@@ -1,10 +1,23 @@
-import React from 'react';
+import Inicio_sesion from "./components/inicio_sesion"
+import Registro from "./components/Registro"
+
+import {createBrowserRouter, RouterProvider } from 'react-router-dom'
+
+
+const router = createBrowserRouter([{
+  path: "/",
+  element: <Inicio_sesion></Inicio_sesion>
+},{
+  path: "/registro",
+  element: <Registro></Registro>
+
+}
+
+])
 
 function App() {
   return (
-    <div className="bg-blue-200 h-screen flex justify-center items-center">
-      <h1 className="text-4xl text-white font-bold">¡Hola, Tailwind CSS con React!</h1>
-    </div>
+   <RouterProvider router={router}></RouterProvider>
   );
 }
 
