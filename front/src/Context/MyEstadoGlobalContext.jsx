@@ -1,4 +1,4 @@
 import React from 'react';
-const MyEstadoGlobalContext = React.createContext({ user: 'NoUser', setUser: () => {} 
+const MyEstadoGlobalContext = React.createContext({ email: 'NoEmail', setEmail: () => {} 
 });
 export {MyEstadoGlobalContext};

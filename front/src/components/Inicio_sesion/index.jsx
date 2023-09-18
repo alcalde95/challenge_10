@@ -4,47 +4,56 @@ import styles from './styles.module.css'
 import {MyEstadoGlobalContext} from '../../Context/MyEstadoGlobalContext';
 import React from 'react';
 import {comporbarLength,comprobarEmail,comprobarPassword} from '../comprobaciones.jsx'
+import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 const Inicio_sesion = () => {
 
+ 
+   const {email, setEmail} = React.useContext(MyEstadoGlobalContext);
+  
+   const [correo,setCorreo] = useState('')
+   const [contrasena,setContrasena] = useState('')
+   const [enterUse,setenterUse] = useState(false)
+   
 
-    const [correo,setCorreo] = useState('')
-    const [contrasena,setContrasena] = useState('')
-    const {user, setUser} = React.useContext(MyEstadoGlobalContext);
-   setUser('NoUser')
+   
+  
 
-   const iniciarSesion = () =>{
-      if()
-   }
+    const iniciarSesion = () => { 
+      const navigate = useNavigate();
+      
+
+     useEffect(() => {
+      if(enterUse == true){
+         navigate("../Registro")
+      }
+      
+     },[enterUse])
+      
+    }
 
 
    return (
-     
-    <>
-    <p>{user}</p>
-     <div className={styles.correo}>
+
+    <form className={styles.body}>
+      <p>{email}</p>
         <label>
             Correo electrónico: 
             <input type="text" value={correo} name='correo' autoComplete='off' onChange={e => setCorreo(e.target.value)} />
         </label>
-     </div>
-    
-    <div className={styles.contrasena}>
+      <p></p>
         <label>
-            Contrase&#241;a: 
+          Contrase&#241;a: 
             <input type="password" value={contrasena} name='correo' autoComplete='off' onChange={e => setContrasena(e.target.value)} />
         </label>
-     </div>
-
-     <div className={styles.inicio_sesion}>
+        <p></p>
         <button onClick={iniciarSesion()}>Inicio sesión</button>  
-     </div>
-     <div className={styles.registro}>
+  
         <button>
         <Link to={'/registro'} >Registro</Link>
         </button>
-     </div>
-    
-    </>
+  
+     </form>
    )
 }
 export default Inicio_sesion
