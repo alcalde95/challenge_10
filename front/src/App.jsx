@@ -3,7 +3,6 @@ import Registro from "./components/Registro"
 
 import {createBrowserRouter, RouterProvider } from 'react-router-dom'
 
-
 const router = createBrowserRouter([{
   path: "/",
   element: <Inicio_sesion></Inicio_sesion>
