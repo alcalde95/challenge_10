@@ -13,19 +13,17 @@ const Inicio_sesion = () => {
   
    const [correo,setCorreo] = useState('')
    const [contrasena,setContrasena] = useState('')
-   const [enterUse,setenterUse] = useState(false)
-   
-
+   const [enterUse,setenterUse] = useState('false')
    
   
 
-    const iniciarSesion = () => { 
+    function iniciarSesion () { 
       const navigate = useNavigate();
-      
+      setenterUse('true')
 
      useEffect(() => {
-      if(enterUse == true){
-         navigate("../Registro")
+      if(enterUse == 'true'){
+         navigate("../registro")
       }
       
      },[enterUse])
@@ -47,7 +45,7 @@ const Inicio_sesion = () => {
             <input type="password" value={contrasena} name='correo' autoComplete='off' onChange={e => setContrasena(e.target.value)} />
         </label>
         <p></p>
-        <button onClick={iniciarSesion()}>Inicio sesión</button>  
+        <button onClick={() =>iniciarSesion()}>Inicio sesión</button>  
   
         <button>
         <Link to={'/registro'} >Registro</Link>
