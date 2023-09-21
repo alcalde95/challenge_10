@@ -1,4 +1,7 @@
-import React from 'react';
-const MyEstadoGlobalContext = React.createContext({ email: 'NoEmail', setEmail: () => {} 
-});
-export {MyEstadoGlobalContext};
+import { createContext } from 'react'
+
+const MyEstadoGlobalContext = createContext({
+    email: 'NoEmail', setEmail: () => { }
+})
+
+export { MyEstadoGlobalContext }

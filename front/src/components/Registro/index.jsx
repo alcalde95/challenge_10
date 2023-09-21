@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import styles from './styles.module.css'
+import styles from './styles.module.css' // Remove
 const Registro = () =>{
 
     const [correo,setCorreo] = useState('')
