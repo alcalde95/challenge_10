@@ -13,27 +13,23 @@ const Inicio_sesion = () => {
   
    const [correo,setCorreo] = useState('')
    const [contrasena,setContrasena] = useState('')
-   const [enterUse,setenterUse] = useState('false')
-   
+   const [enterUse,setenterUse] = useState(0)
+   const navigate = useNavigate();
   
 
-    function iniciarSesion () { 
-      const navigate = useNavigate();
-      setenterUse('true')
+   useEffect(() => {
+    enterUse == 1 ? navigate("/registro") : null;
+       setenterUse(0) 
+   },[enterUse])
 
-     useEffect(() => {
-      if(enterUse == 'true'){
-         navigate("../registro")
-      }
-      
-     },[enterUse])
-      
-    }
+   function iniciarSesion () { 
+    setenterUse(1); 
+  }
 
 
    return (
 
-    <form className={styles.body}>
+    <div className="bg-blue-200 h-screen flex justify-center items-center">
       <p>{email}</p>
         <label>
             Correo electrónico: 
@@ -51,7 +47,7 @@ const Inicio_sesion = () => {
         <Link to={'/registro'} >Registro</Link>
         </button>
   
-     </form>
+     </div>
    )
 }
 export default Inicio_sesion
