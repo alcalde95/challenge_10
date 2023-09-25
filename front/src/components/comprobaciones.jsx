@@ -12,7 +12,3 @@ export const comprobarPassword = (password) => {
     }else return true;
 }
 
-export const comporbarLength = (length,caracters) =>{
-    let regex = new RegExp('.{' +{length} + '}.')
-    return regex.test(caracters)
-}

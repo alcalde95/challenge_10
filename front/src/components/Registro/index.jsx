@@ -1,15 +1,47 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import styles from './styles.module.css' // Remove
+import { comprobarEmail, comprobarPassword} from '../comprobaciones.jsx'
+import { useNavigate } from 'react-router-dom'
 const Registro = () => {
 
     const [correo, setCorreo] = useState('')
     const [contrasena, setContrasena] = useState('')
     const [contrasenaRepetida, setContrasenaRepetida] = useState('')
+    const navigate = useNavigate()
 
-    const mostrar = (id) => {
-        document.getElementById(id).style.display = 'block'
+    const comprobacionesEmail = () =>{
+       
+        !comprobarEmail(correo) ? mostrar('errorEmail','El email no cumple los parámetros mínimos') : ocultar('errorEmail') 
+         
+        return comprobarEmail(correo)
+        
     }
+
+    const comprobacionesContrasena = () =>{
+
+      contrasena.length<8 ? mostrar('errorContrasena','La contraseña es demasiado corta. Mínimo 8 caracteres') :
+        !comprobarPassword(contrasena) ?mostrar('errorContrasena','La contraseña no cumple los parámetros mínimos') :
+        ocultar('errorContrasena')
+        return contrasena.length<8 && comprobarPassword(contrasena)
+    }
+
+    const contrasenaIguales = () =>{
+        contrasena != contrasenaRepetida ? mostrar('errorContrasenasNoIguales','Las contraseñas no son iguales') : ocultar('errorContrasenasNoIguales')
+        return contrasena == contrasenaRepetida
+    }
+
+    const comprobacionFinal = () =>{
+       comprobacionesEmail && comprobacionesContrasena && contrasenaIguales ? (alert('Registro completado'),navigate("/")) : mostrar('errorContrasena','esto no funciona :V')
+    }
+
+    const mostrar = (id,mensaje) => {
+        document.getElementById(id).style.display = 'block'
+        document.getElementById(id).textContent = mensaje
+    }
+    const ocultar = (id) => {
+        document.getElementById(id).style.display = 'none'
+    }
+
     return (
 
         <div className="flex flex-col justify-center items-center h-[100vh] bg-black">
@@ -26,32 +58,32 @@ const Registro = () => {
                     name='correo'
                     autoComplete='off'
                     onChange={e => setCorreo(e.target.value)}
-                    onBlur={() => mostrar('errorEmail')}
+                    onBlur={() =>comprobacionesEmail()}
                 />
-                <p id='errorEmail' style={{ display: 'none' }} className='text-red-700 bg-zinc-300	border-2 rounded-md'> El email no cumple los parámetros mínimos</p>
+                <p id='errorEmail' style={{ display: 'none' }} className='text-red-700 bg-zinc-300	border-2 rounded-md'></p>
 
                 <input type="password"
                     placeholder='Contraseña'
                     className='bg-neutral-500 p-2 rounded-lg w-full text-center placeholder:text-neutral-50 text-neutral-50 outline-none'
                     value={contrasena}
-                    name='correo'
+                    name='contrasena'
                     autoComplete='off'
                     onChange={e => setContrasena(e.target.value)}
-                    onBlur={() => mostrar('errorContrasena')}
+                    onBlur={() => comprobacionesContrasena('errorContrasena')}
                 />
-                <p id='errorContrasena' style={{ display: 'none' }} className='text-red-700 bg-zinc-300	border-2 rounded-md'> La contraseña no cumple los parámetros mínimos</p>
+                <p id='errorContrasena' style={{ display: 'none' }} className='text-red-700 bg-zinc-300	border-2 rounded-md'></p>
 
                 <input type="password"
                     placeholder='Repita la contraseña'
                     className='bg-neutral-500 p-2 rounded-lg w-full text-center placeholder:text-neutral-50 text-neutral-50 outline-none'
                     value={contrasenaRepetida}
-                    name='correo'
+                    name='contrasenaRepetida'
                     autoComplete='off'
                     onChange={e => setContrasenaRepetida(e.target.value)}
-                    onBlur={() => mostrar('errorContrasenasNoIguales')}
+                    onBlur={() => contrasenaIguales()}
                 />
 
-                <p id='errorContrasenasNoIguales' style={{ display: 'none' }} className='text-red-700 bg-zinc-300	border-2 rounded-md'> Las contraseñas no son iguales</p>
+                <p id='errorContrasenasNoIguales' style={{ display: 'none' }} className='text-red-700 bg-zinc-300	border-2 rounded-md'></p>
 
                 <hr className='border-b border-neutral-300 w-full' />
 
@@ -59,8 +91,9 @@ const Registro = () => {
 
                 <button
                     className='bg-neutral-400 p-2 rounded-lg w-full text-center hover:bg-neutral-300 transition duration-200 ease-in-out'
+                    onClick={() => comprobacionFinal()}
                 >
-                    <Link to={'/registro'} >Registro</Link>
+                   Registro
                 </button>
             </div>
         </div>

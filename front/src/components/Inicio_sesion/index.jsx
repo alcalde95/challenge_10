@@ -1,7 +1,7 @@
 import { useState, useContext } from 'react'
 import { Link } from 'react-router-dom'
 import { MyEstadoGlobalContext } from '../../Context/MyEstadoGlobalContext'
-// import { comporbarLength, comprobarEmail, comprobarPassword } from '../comprobaciones.jsx'
+
 import { useNavigate } from 'react-router-dom'
 import { useEffect } from 'react'
 
