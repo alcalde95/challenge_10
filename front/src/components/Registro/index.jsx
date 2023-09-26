@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { comprobarEmail, comprobarPassword} from '../comprobaciones.jsx'
+import { comprobarEmail, comprobarPassword } from '../comprobaciones.jsx'
 import { useNavigate } from 'react-router-dom'
 const Registro = () => {
 
@@ -9,32 +9,32 @@ const Registro = () => {
     const [contrasenaRepetida, setContrasenaRepetida] = useState('')
     const navigate = useNavigate()
 
-    const comprobacionesEmail = () =>{
-       
-        !comprobarEmail(correo) ? mostrar('errorEmail','El email no cumple los parámetros mínimos') : ocultar('errorEmail') 
-         
+    const comprobacionesEmail = () => {
+
+        !comprobarEmail(correo) ? mostrar('errorEmail', 'El email no cumple los parámetros mínimos') : ocultar('errorEmail')
+
         return comprobarEmail(correo)
-        
+
     }
 
-    const comprobacionesContrasena = () =>{
+    const comprobacionesContrasena = () => {
 
-      contrasena.length<8 ? mostrar('errorContrasena','La contraseña es demasiado corta. Mínimo 8 caracteres') :
-        !comprobarPassword(contrasena) ?mostrar('errorContrasena','La contraseña no cumple los parámetros mínimos') :
-        ocultar('errorContrasena')
-        return contrasena.length<8 && comprobarPassword(contrasena)
+        contrasena.length < 8 ? mostrar('errorContrasena', 'La contraseña es demasiado corta. Mínimo 8 caracteres') :
+            !comprobarPassword(contrasena) ? mostrar('errorContrasena', 'La contraseña no cumple los parámetros mínimos') :
+                ocultar('errorContrasena')
+        return contrasena.length > 8 && comprobarPassword(contrasena)
     }
 
-    const contrasenaIguales = () =>{
-        contrasena != contrasenaRepetida ? mostrar('errorContrasenasNoIguales','Las contraseñas no son iguales') : ocultar('errorContrasenasNoIguales')
+    const contrasenaIguales = () => {
+        contrasena != contrasenaRepetida ? mostrar('errorContrasenasNoIguales', 'Las contraseñas no son iguales') : ocultar('errorContrasenasNoIguales')
         return contrasena == contrasenaRepetida
     }
 
-    const comprobacionFinal = () =>{
-       comprobacionesEmail && comprobacionesContrasena && contrasenaIguales ? (alert('Registro completado'),navigate("/")) : mostrar('errorContrasena','esto no funciona :V')
+    const comprobacionFinal = () => {
+        comprobacionesEmail() && comprobacionesContrasena() && contrasenaIguales() ? (alert('Registro completado'), navigate("/")) : mostrar('errorRegistro', 'Alguno de los parámetros introducidos no cumple los requisitos')
     }
 
-    const mostrar = (id,mensaje) => {
+    const mostrar = (id, mensaje) => {
         document.getElementById(id).style.display = 'block'
         document.getElementById(id).textContent = mensaje
     }
@@ -58,7 +58,7 @@ const Registro = () => {
                     name='correo'
                     autoComplete='off'
                     onChange={e => setCorreo(e.target.value)}
-                    onBlur={() =>comprobacionesEmail()}
+                    onBlur={() => comprobacionesEmail()}
                 />
                 <p id='errorEmail' style={{ display: 'none' }} className='text-red-700 bg-zinc-300	border-2 rounded-md'></p>
 
@@ -93,8 +93,10 @@ const Registro = () => {
                     className='bg-neutral-400 p-2 rounded-lg w-full text-center hover:bg-neutral-300 transition duration-200 ease-in-out'
                     onClick={() => comprobacionFinal()}
                 >
-                   Registro
+                    Registro
                 </button>
+
+                <p id='errorRegistro' style={{ display: 'none' }} className='text-red-700 bg-zinc-300	border-2 rounded-md'></p>
             </div>
         </div>
     )
