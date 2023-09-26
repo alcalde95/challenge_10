@@ -4,6 +4,8 @@ import { MyEstadoGlobalContext } from '../../Context/MyEstadoGlobalContext'
 import logo from './logo-sinfondo.png'
 import { useNavigate } from 'react-router-dom'
 import { useEffect } from 'react'
+import { comprobarEmail, comprobarPassword , mostrar , ocultar} from '../comprobaciones.jsx'
+
 const Menu = () => {
 
     const [nombre_caja, setnombre_caja] = useState('')
@@ -26,6 +28,11 @@ const Menu = () => {
         document.getElementById('multiplication_caja').style.display = 'block'
         document.getElementById('foto').style.display = 'block'
 
+    }
+
+    const comprobarNombre = () => {
+         nombre_caja.length < 3 || nombre_caja.length > 20 ?  mostrar('errorNombreCaja','El tamaño del nombre debe estar entre 3 y 20 caracteres') : ocultar('errorNombreCaja')
+         return 3 >= nombre_caja.length >=20
     }
 
     return (
@@ -105,6 +112,7 @@ const Menu = () => {
                     name='caja_nombre'
                     autoComplete='off'
                     onChange={e => setnombre_caja(e.target.value)}
+                    onBlur={() => comprobarNombre()}
                 >
                 </input>
 

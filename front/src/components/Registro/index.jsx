@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { comprobarEmail, comprobarPassword } from '../comprobaciones.jsx'
+import { comprobarEmail, comprobarPassword , mostrar , ocultar} from '../comprobaciones.jsx'
 import { useNavigate } from 'react-router-dom'
 const Registro = () => {
 
@@ -34,14 +34,8 @@ const Registro = () => {
         comprobacionesEmail() && comprobacionesContrasena() && contrasenaIguales() ? (alert('Registro completado'), navigate("/")) : mostrar('errorRegistro', 'Alguno de los parámetros introducidos no cumple los requisitos')
     }
 
-    const mostrar = (id, mensaje) => {
-        document.getElementById(id).style.display = 'block'
-        document.getElementById(id).textContent = mensaje
-    }
-    const ocultar = (id) => {
-        document.getElementById(id).style.display = 'none'
-    }
-
+    
+   
     return (
 
         <div className="flex flex-col justify-center items-center h-[100vh] bg-black">

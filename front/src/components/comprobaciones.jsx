@@ -12,3 +12,11 @@ export const comprobarPassword = (password) => {
     }else return true;
 }
 
+export const mostrar = (id, mensaje) => {
+    document.getElementById(id).style.display = 'block'
+    document.getElementById(id).textContent = mensaje
+}
+
+export const ocultar = (id) => {
+    document.getElementById(id).style.display = 'none'
+}
