@@ -1,5 +1,6 @@
 import Inicio_sesion from "./components/inicio_sesion"
 import Registro from "./components/Registro"
+import Menu from "./components/Menu"
 
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 
@@ -10,6 +11,9 @@ const router = createBrowserRouter([
   }, {
     path: "/registro",
     element: <Registro />
+  },{
+    path: "/Menu",
+    element: <Menu />
 
   }
 ])

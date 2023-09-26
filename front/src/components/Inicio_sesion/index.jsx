@@ -14,7 +14,7 @@ const Inicio_sesion = () => {
   const [enterUse, setenterUse] = useState(0)
 
   useEffect(() => {
-    enterUse == 1 ? navigate("/registro") : null
+    enterUse == 1 ? navigate("/Menu") : null
     setenterUse(0)
     //eslint-disable-next-line react-hooks/exhaustive-deps
   }, [enterUse])
