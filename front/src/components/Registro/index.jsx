@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
 import { comprobarEmail, comprobarPassword , mostrar , ocultar} from '../comprobaciones.jsx'
 import { useNavigate } from 'react-router-dom'
 const Registro = () => {

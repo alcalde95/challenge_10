@@ -48,23 +48,23 @@ const Menu = () => {
     const Table = (props) => {
         const { data } = props
         return (
-            <table className="table-auto border-separate border-spacing-x-2.5 border-spacing-y-2.5 border border-slate-500 bg-amber-950 rounded-lg">
+            <table className="table-auto border-separate border-spacing-x-2.5 border-spacing-y-2.5   bg-neutral-500 rounded-lg">
                 <thead>
                     <tr className=''>
-                        <th className='border border-slate-900 bg-slate-600 rounded-lg' >Name</th>
-                        <th className='border border-slate-900 bg-slate-600 rounded-lg'>species </th>
-                        <th className='border border-slate-900 bg-slate-600 rounded-lg'>description </th>
-                        <th className='border border-slate-900 bg-slate-600 rounded-lg'>soil  </th>
-                        <th className='border border-slate-900 bg-slate-600 rounded-lg'>temperature  </th>
-                        <th className='border border-slate-900 bg-slate-600 rounded-lg'>sun  </th>
-                        <th className='border border-slate-900 bg-slate-600 rounded-lg'>water  </th>
-                        <th className='border border-slate-900 bg-slate-600 rounded-lg'>multiplication  </th>
-                        <th className='border border-slate-900 bg-slate-600 rounded-lg'>image_url  </th>
-                        <th className='border border-slate-900 bg-slate-600 rounded-lg'>edit</th>
-                        <th className='border border-slate-900 bg-slate-600 rounded-lg'>ddelete</th>
+                        <th className='rounded-lg w-auto  bg-zinc-800' >Name</th>
+                        <th className='rounded-lg w-auto bg-zinc-800'>species </th>
+                        <th className='rounded-lg w-auto bg-zinc-800'>description </th>
+                        <th className='rounded-lg w-auto bg-zinc-800'>soil  </th>
+                        <th className='rounded-lg w-auto bg-zinc-800'>temperature  </th>
+                        <th className='rounded-lg w-auto bg-zinc-800'>sun  </th>
+                        <th className='rounded-lg w-auto bg-zinc-800'>water  </th>
+                        <th className='rounded-lg w-auto bg-zinc-800'>multiplication  </th>
+                        <th className='rounded-lg w-auto bg-zinc-800'>image_url  </th>
+                        <th className='rounded-lg w-auto bg-zinc-800'>edit</th>
+                        <th className='rounded-lg w-auto bg-zinc-800'>ddelete</th>
                     </tr>
                 </thead>
-                <tbody className='border border-slate-900 bg-slate-600 rounded-lg'>
+                <tbody className='bg-zinc-700 rounded-lg'>
                     {data.map(row =>
                         <>
                             <Row name={row.name}
@@ -76,8 +76,8 @@ const Menu = () => {
                                 water={row.water}
                                 multiplication={row.multiplication}
                                 image_url={row.image_url}
-                                edit={<button onClick={() => addeditDelete(row.name, row.species, row.description, row.soil, row.temperature, row.sun, row.water, row.multiplication, row.image_url, 2)}>Edit</button>}
-                                ddelete={<button onClick={() => addeditDelete(row.name, row.species, row.description, row.soil, row.temperature, row.sun, row.water, row.multiplication, row.image_url, 1)}>ddelete</button>}
+                                edit={<button onClick={() => addeditDelete(row.name, row.species, row.description, row.soil, row.temperature, row.sun, row.water, row.multiplication, row.image_url, 'edit')}>Edit</button>}
+                                ddelete={<button onClick={() => addeditDelete(row.name, row.species, row.description, row.soil, row.temperature, row.sun, row.water, row.multiplication, row.image_url, 'delete')}>ddelete</button>}
                             />
 
                         </>
@@ -88,9 +88,24 @@ const Menu = () => {
         )
     }
 
-    const addeditDelete = (name, species, description, soil, temperature, sun, water, multiplication, image_url, editOrDelete) => {
+    const addeditDelete = (name, species, description, soil, temperature, sun, water, multiplication, image_url, addeditDelete) => {
 
-        editOrDelete == 1 ? stadeReadonly(true) : stadeReadonly(false)
+        stadeReadonly(false)
+
+        if (addeditDelete == 'add') {
+            document.getElementById('addButton').style.display = 'block'
+            ocultar('editButton')
+            ocultar('deleteButton')
+        } else if (addeditDelete == 'edit') {
+            ocultar('addButton')
+            document.getElementById('editButton').style.display = 'block'
+            ocultar('deleteButton')
+        } else {
+            ocultar('addButton')
+            ocultar('editButton')
+            document.getElementById('deleteButton').style.display = 'block'
+            stadeReadonly(true)
+        }
 
         document.getElementById('caja_nombre').style.display = 'block'
         setnombre_caja(name)
@@ -189,7 +204,7 @@ const Menu = () => {
                 <header>Usuario : x (poner dp con el contexto)</header>
                 <button
                     className=' bg-neutral-400 p-2 rounded-lg  text-center hover:bg-neutral-300 transition duration-200 ease-in-out'
-                    onClick={() => addeditDelete('', '', '', '', '', '', '', '', '', 2)}
+                    onClick={() => addeditDelete('', '', '', '', '', '', '', '', '', 'add')}
                 >
                     Añadir
                 </button>
@@ -353,6 +368,9 @@ const Menu = () => {
                     <p id='errorNombreNuevo' style={{ display: 'none' }} className='text-red-700 bg-zinc-300	border-2 rounded-md'></p>
 
                 </form>
+                <button className=' bg-neutral-400 p-2 rounded-lg  text-center hover:bg-neutral-300 transition duration-200 ease-in-out' id='addButton' style={{ display: 'none' }} >Add</button>
+                <button className=' bg-neutral-400 p-2 rounded-lg  text-center hover:bg-neutral-300 transition duration-200 ease-in-out' id='editButton' style={{ display: 'none' }} >Edit</button>
+                <button className=' bg-neutral-400 p-2 rounded-lg  text-center hover:bg-neutral-300 transition duration-200 ease-in-out' id='deleteButton' style={{ display: 'none' }} >Delete</button>
 
 
                 <Table data={plants}></Table>
