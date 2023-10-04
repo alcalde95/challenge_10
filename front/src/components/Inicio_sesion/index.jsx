@@ -24,10 +24,6 @@ const Inicio_sesion = () => {
   }
 
 
-   const mostrar = (id) => {
-        document.getElementById(id).style.display = 'block'
-    }
-
   return (
     <div className="flex flex-col justify-center items-center h-[100vh] bg-black">
       <div className='bg-neutral-600 p-8 rounded-lg flex flex-col justify-between gap-4 items-center w-[33vw]'>
