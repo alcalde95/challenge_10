@@ -1,6 +1,8 @@
+/* eslint-disable react/prop-types */
 
 import { Link } from "react-router-dom"
-import { useFetch } from "../../customHooks/useFetch"
+// import useFetch from "../../customHooks/useFetch"
+
 const Row = (props) => {
     const { name, species, description, soil, temperature, sun, water, multiplication, image_url, edit, ddelete } = props
     return (<tr className='rounded-lg'>
@@ -24,7 +26,7 @@ const Row = (props) => {
 const Table = (props) => {
 
 
-    
+
     const { data } = props
 
     return (
@@ -45,26 +47,27 @@ const Table = (props) => {
                 </tr>
             </thead>
             <tbody className='bg-zinc-700 rounded-lg'>
-                {data?.map(row =>
-                    <>
-                        <Row key={row.id}
-                            name={row.name}
-                            species={row.species}
-                            description={row.description}
-                            soil={row.soil}
-                            temperature={row.temperature}
-                            sun={row.sun}
-                            water={row.water}
-                            multiplication={row.multiplication}
-                            image_url={row.image_url}
-                            edit={<Link to={"/Edit"} state={{ name: row.name, species: row.species, description: row.description, soil: row.soil, temperature: row.temperature, sun: row.sun, water: row.water, multiplication: row.multiplication }}
+                {data?.map((row, key) =>
+                    <Row key={key}
+                        name={row.name}
+                        species={row.species}
+                        description={row.description}
+                        soil={row.soil}
+                        temperature={row.temperature}
+                        sun={row.sun}
+                        water={row.water}
+                        multiplication={row.multiplication}
+                        image_url={row.image_url}
+                        edit={
+                            <Link
+                                to={"/Edit"}
+                                state={{ name: row.name, species: row.species, description: row.description, soil: row.soil, temperature: row.temperature, sun: row.sun, water: row.water, multiplication: row.multiplication }}
                             >
                                 Edit
-                            </Link>}
-                            ddelete={<button >Delete</button>}
-                        />
-
-                    </>
+                            </Link>
+                        }
+                        ddelete={<button >Delete</button>}
+                    />
                 )}
 
             </tbody>

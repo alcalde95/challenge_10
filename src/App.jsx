@@ -6,6 +6,7 @@ import Edit from "./components/Edit/Edit"
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { TableUseStatescontext } from "./Context/TableUseStatescontext"
 import { useState } from "react"
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -21,7 +22,7 @@ const router = createBrowserRouter([
     path: "/Add",
     element: <Add />
   }, {
-    path:"/Edit",
+    path: "/Edit",
     element: <Edit />
   }
 ])
@@ -38,8 +39,10 @@ function App() {
   const [multiplication_caja, setmultiplication_caja] = useState('')
 
   return (
-    <TableUseStatescontext.Provider value={{ nombre_caja, setnombre_caja, species_caja, setspecies_caja, description_caja, setdescription_caja, soil_caja, setsoil_caja,
-      temperature_caja, settemperature_caja, sun_caja, setsun_caja,water_caja, setwater_caja,multiplication_caja, setmultiplication_caja}}>
+    <TableUseStatescontext.Provider value={{
+      nombre_caja, setnombre_caja, species_caja, setspecies_caja, description_caja, setdescription_caja, soil_caja, setsoil_caja,
+      temperature_caja, settemperature_caja, sun_caja, setsun_caja, water_caja, setwater_caja, multiplication_caja, setmultiplication_caja
+    }}>
       <RouterProvider router={router}></RouterProvider>
     </TableUseStatescontext.Provider>
   );

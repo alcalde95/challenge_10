@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { comprobarEmail, comprobarPassword , mostrar , ocultar} from '../comprobaciones.jsx'
+import { comprobarEmail, comprobarPassword , mostrar , ocultar} from '../comprobaciones.js'
 import { useNavigate } from 'react-router-dom'
 const Registro = () => {
 

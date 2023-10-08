@@ -25,7 +25,6 @@ const Inicio_sesion = () => {
     setenterUse(1)
   }
 
-
   return (
     <div className="flex flex-col justify-center items-center h-[100vh] bg-black">
       <div className='bg-neutral-600 p-8 rounded-lg flex flex-col justify-between gap-4 items-center w-[33vw]'>
@@ -47,7 +46,7 @@ const Inicio_sesion = () => {
           onChange={e => setCorreo(e.target.value)}
         />
 
-       
+
         <input type="password"
           placeholder='Contraseña'
           className='bg-neutral-500 p-2 rounded-lg w-full text-center placeholder:text-neutral-50 text-neutral-50 outline-none'

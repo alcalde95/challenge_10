@@ -1,15 +1,15 @@
-import {validEmail, validPassword} from './regex.jsx'
+import { validEmail, validPassword } from './regex.js'
 
 export const comprobarEmail = (email) => {
-    if(!validEmail.test(email)){
+    if (!validEmail.test(email)) {
         return false;
-    }else return true;
+    } else return true;
 }
 
 export const comprobarPassword = (password) => {
-    if(!validPassword.test(password)){
+    if (!validPassword.test(password)) {
         return false;
-    }else return true;
+    } else return true;
 }
 
 export const mostrar = (id, mensaje) => {
