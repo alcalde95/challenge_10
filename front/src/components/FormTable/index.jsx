@@ -8,13 +8,7 @@ const FormTable = () => {
 
     const{ nombre_caja, setnombre_caja, species_caja, setspecies_caja, description_caja, setdescription_caja, soil_caja, setsoil_caja,
         temperature_caja, settemperature_caja, sun_caja, setsun_caja,water_caja, setwater_caja,multiplication_caja, setmultiplication_caja} = useContext( TableUseStatescontext )
-        console.log("nombrecaja=" + nombre_caja)
-
-
-    function    ComprobarNombre(nombre_caja){
-        comprobarNombre(nombre_caja)
-        console.log("nombrecaja=" + nombre_caja)
-    }
+   
     return(
         <form >
                     <input
@@ -27,7 +21,7 @@ const FormTable = () => {
                         name='caja_nombre'
                         autoComplete='off'
                         onChange={e => setnombre_caja(e.target.value)}
-                        onBlur={() => ComprobarNombre(nombre_caja)}
+                        onBlur={() => comprobarNombre(nombre_caja)}
                     >
                     </input>
 

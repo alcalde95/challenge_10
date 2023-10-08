@@ -2,49 +2,26 @@ import { useContext, useState } from 'react'
 import logo from './logo-sinfondo.png'
 import Table from "../Table"
 import FormTable from '../FormTable'
-import { stadeReadonly } from '../FormTable/EstadosFormTable'
-import { ocultar } from '../comprobaciones'
 import { MyEstadoGlobalContext } from '../../Context/MyEstadoGlobalContext'
 import { Link } from 'react-router-dom'
-const plants = [
-    { id: 1, name: "Cy Ganderton", species: "Blue", description: "Blue", soil: "Blue", temperature: "Blue", sun: "Blue", water: "Blue", multiplication: "Blue", image_url: <img className='w-12' src={logo} /> },
-    { id: 2, name: "Cy Ganderton", species: "Red", description: "Blue", soil: "Blue", temperature: "Blue", sun: "Blue", water: "Blue", multiplication: "Blue", image_url: <img className='w-12' src={logo} /> },
-    { id: 3, name: "Cy Ganderton", species: "Green", description: "Blue", soil: "Blue", temperature: "Blue", sun: "Blue", water: "Blue", multiplication: "Blue", image_url: <img className='w-12' src={logo} /> }
-]
 
-
-
-export const plantsElementsInfo = {
-    nombre_caja: '',
-    species_caja: '',
-    description_caja: '',
-    soil_caja: '',
-    temperature_caja: '',
-    sun_caja: '',
-    water_caja: '',
-    multiplication_caja: '',
-}
+import { useFetch } from '../../customHooks/useFetch'
 
 
 const Menu = () => {
 
 
-
-    const [nombre_caja, setnombre_caja] = useState('')
-    const [species_caja, setspecies_caja] = useState('')
-    const [description_caja, setdescription_caja] = useState('')
-    const [soil_caja, setsoil_caja] = useState('')
-    const [temperature_caja, settemperature_caja] = useState('')
-    const [sun_caja, setsun_caja] = useState('')
-    const [water_caja, setwater_caja] = useState('')
-    const [multiplication_caja, setmultiplication_caja] = useState('')
+    const { data, loading, error } = useFetch("http://localhost:3000/plantas")
+    const { data:tryngAgain, loading:loading2, error:error2 } = useFetch('http://localhost:3000/usuarios/jorge@test.com')
+    
+    !loading2 ? console.log("El error es:" +  tryngAgain.email + " " ) : console.log("Aún no se cargó el usuario xd")
     const { email, setEmail } = useContext(MyEstadoGlobalContext)
     const [searchBox, setSearchBox] = useState('')
 
     return (
 
-        <div className='flex flex-col justify-center items-center h-[100vh] bg-black text-neutral-50'>
-            <div className='bg-neutral-600 p-8 rounded-lg flex flex-col justify-between gap-4 items-center w-[50vw]'>
+        <div className='flex flex-col flex-wrap justify-center overflow-auto items-center min-h-screen bg-black text-neutral-50 bg-fixed bg-cover py-5'>
+            <div className='bg-neutral-600 p-8 rounded-lg flex flex-col justify-between gap-4 items-center w-[70vw]'>
                 <header>Usuario : {email} (poner dp con el contexto)</header>
                 <button
                     className=' bg-neutral-400 p-2 rounded-lg  text-center hover:bg-neutral-300 transition duration-200 ease-in-out'
@@ -54,7 +31,7 @@ const Menu = () => {
                     <Link
                         to={
                             "/Add"}
-                        state= {{ detail: "Some detail" }}
+                        state={{ detail: "Some detail" }}
 
                     >
                         Navigate
@@ -85,9 +62,13 @@ const Menu = () => {
                 <button className=' bg-neutral-400 p-2 rounded-lg  text-center hover:bg-neutral-300 transition duration-200 ease-in-out' id='deleteButton' style={{ display: 'none' }} >Delete</button>
 
                 {/*No c pq esto me lo marca como error, en otro lado hace igual y tb va, así q ni idea xddddd*/}
-
-                <Table data={plants} plantsElementsInfo={plantsElementsInfo}></Table>
+                {error && <li>Error: {error}</li>}
+                {!loading ?
+                    <Table data={data}></Table>
+                    : <p>Loading...</p>
+                }
             </div>
+
         </div >
     )
 

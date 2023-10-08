@@ -1,6 +1,6 @@
-import { plantsElementsInfo } from "../Menu"
-import { AddeditDelete } from "../addEditDeleteManagement/addEditDeleteFuction"
+
 import { Link } from "react-router-dom"
+import { useFetch } from "../../customHooks/useFetch"
 const Row = (props) => {
     const { name, species, description, soil, temperature, sun, water, multiplication, image_url, edit, ddelete } = props
     return (<tr className='rounded-lg'>
@@ -20,7 +20,10 @@ const Row = (props) => {
 
 
 
-const Table = (props,plantsElementsInfo) => {
+
+const Table = (props) => {
+
+
     
     const { data } = props
 
@@ -42,9 +45,10 @@ const Table = (props,plantsElementsInfo) => {
                 </tr>
             </thead>
             <tbody className='bg-zinc-700 rounded-lg'>
-                {data.map(row =>
+                {data?.map(row =>
                     <>
-                        <Row name={row.name}
+                        <Row key={row.id}
+                            name={row.name}
                             species={row.species}
                             description={row.description}
                             soil={row.soil}
@@ -53,11 +57,11 @@ const Table = (props,plantsElementsInfo) => {
                             water={row.water}
                             multiplication={row.multiplication}
                             image_url={row.image_url}
-                            edit={  <Link to={"/Edit"} state= {{ name:row.name, species:row.species, description:row.description, soil:row.soil, temperature:row.temperature, sun:row.sun, water:row.water, multiplication:row.multiplication }}
+                            edit={<Link to={"/Edit"} state={{ name: row.name, species: row.species, description: row.description, soil: row.soil, temperature: row.temperature, sun: row.sun, water: row.water, multiplication: row.multiplication }}
                             >
                                 Edit
                             </Link>}
-                            ddelete={<button onClick={() => AddeditDelete(row.name, row.species, row.description, row.soil, row.temperature, row.sun, row.water, row.multiplication, row.image_url, 'delete',{plantsElementsInfo})}>ddelete</button>}
+                            ddelete={<button >Delete</button>}
                         />
 
                     </>
