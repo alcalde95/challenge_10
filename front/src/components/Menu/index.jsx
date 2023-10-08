@@ -1,11 +1,11 @@
-import { useState, useContext } from 'react'
-import { Link } from 'react-router-dom'
-import { MyEstadoGlobalContext } from '../../Context/MyEstadoGlobalContext'
+import { useContext, useState } from 'react'
 import logo from './logo-sinfondo.png'
-import { useNavigate } from 'react-router-dom'
-import { useEffect } from 'react'
-import { comprobarEmail, comprobarPassword, mostrar, ocultar } from '../comprobaciones.jsx'
-
+import Table from "../Table"
+import FormTable from '../FormTable'
+import { stadeReadonly } from '../FormTable/EstadosFormTable'
+import { ocultar } from '../comprobaciones'
+import { MyEstadoGlobalContext } from '../../Context/MyEstadoGlobalContext'
+import { Link } from 'react-router-dom'
 const plants = [
     { id: 1, name: "Cy Ganderton", species: "Blue", description: "Blue", soil: "Blue", temperature: "Blue", sun: "Blue", water: "Blue", multiplication: "Blue", image_url: <img className='w-12' src={logo} /> },
     { id: 2, name: "Cy Ganderton", species: "Red", description: "Blue", soil: "Blue", temperature: "Blue", sun: "Blue", water: "Blue", multiplication: "Blue", image_url: <img className='w-12' src={logo} /> },
@@ -14,7 +14,21 @@ const plants = [
 
 
 
+export const plantsElementsInfo = {
+    nombre_caja: '',
+    species_caja: '',
+    description_caja: '',
+    soil_caja: '',
+    temperature_caja: '',
+    sun_caja: '',
+    water_caja: '',
+    multiplication_caja: '',
+}
+
+
 const Menu = () => {
+
+
 
     const [nombre_caja, setnombre_caja] = useState('')
     const [species_caja, setspecies_caja] = useState('')
@@ -24,190 +38,33 @@ const Menu = () => {
     const [sun_caja, setsun_caja] = useState('')
     const [water_caja, setwater_caja] = useState('')
     const [multiplication_caja, setmultiplication_caja] = useState('')
+    const { email, setEmail } = useContext(MyEstadoGlobalContext)
     const [searchBox, setSearchBox] = useState('')
-
-    const Row = (props) => {
-        const { name, species, description, soil, temperature, sun, water, multiplication, image_url, edit, ddelete } = props
-        return (<tr>
-            <td>{name}</td>
-            <td>{species}</td>
-            <td>{description}</td>
-            <td>{soil}</td>
-            <td>{temperature}</td>
-            <td>{sun}</td>
-            <td>{water}</td>
-            <td>{multiplication}</td>
-            <td>{image_url}</td>
-            <td>{edit}</td>
-            <td>{ddelete}</td>
-        </tr>)
-    }
-
-
-
-    const Table = (props) => {
-        const { data } = props
-        return (
-            <table className="table-auto border-separate border-spacing-x-2.5 border-spacing-y-2.5   bg-neutral-500 rounded-lg">
-                <thead>
-                    <tr className=''>
-                        <th className='rounded-lg w-auto  bg-zinc-800' >Name</th>
-                        <th className='rounded-lg w-auto bg-zinc-800'>species </th>
-                        <th className='rounded-lg w-auto bg-zinc-800'>description </th>
-                        <th className='rounded-lg w-auto bg-zinc-800'>soil  </th>
-                        <th className='rounded-lg w-auto bg-zinc-800'>temperature  </th>
-                        <th className='rounded-lg w-auto bg-zinc-800'>sun  </th>
-                        <th className='rounded-lg w-auto bg-zinc-800'>water  </th>
-                        <th className='rounded-lg w-auto bg-zinc-800'>multiplication  </th>
-                        <th className='rounded-lg w-auto bg-zinc-800'>image_url  </th>
-                        <th className='rounded-lg w-auto bg-zinc-800'>edit</th>
-                        <th className='rounded-lg w-auto bg-zinc-800'>ddelete</th>
-                    </tr>
-                </thead>
-                <tbody className='bg-zinc-700 rounded-lg'>
-                    {data.map(row =>
-                        <>
-                            <Row name={row.name}
-                                species={row.species}
-                                description={row.description}
-                                soil={row.soil}
-                                temperature={row.temperature}
-                                sun={row.sun}
-                                water={row.water}
-                                multiplication={row.multiplication}
-                                image_url={row.image_url}
-                                edit={<button onClick={() => addeditDelete(row.name, row.species, row.description, row.soil, row.temperature, row.sun, row.water, row.multiplication, row.image_url, 'edit')}>Edit</button>}
-                                ddelete={<button onClick={() => addeditDelete(row.name, row.species, row.description, row.soil, row.temperature, row.sun, row.water, row.multiplication, row.image_url, 'delete')}>ddelete</button>}
-                            />
-
-                        </>
-                    )}
-
-                </tbody>
-            </table>
-        )
-    }
-
-    const addeditDelete = (name, species, description, soil, temperature, sun, water, multiplication, image_url, addeditDelete) => {
-
-        stadeReadonly(false)
-
-        if (addeditDelete == 'add') {
-            document.getElementById('addButton').style.display = 'block'
-            ocultar('editButton')
-            ocultar('deleteButton')
-        } else if (addeditDelete == 'edit') {
-            ocultar('addButton')
-            document.getElementById('editButton').style.display = 'block'
-            ocultar('deleteButton')
-        } else {
-            ocultar('addButton')
-            ocultar('editButton')
-            document.getElementById('deleteButton').style.display = 'block'
-            stadeReadonly(true)
-        }
-
-        document.getElementById('caja_nombre').style.display = 'block'
-        setnombre_caja(name)
-        ocultar('errorNombreCaja')
-        //esto preguntar a stephan
-
-        document.getElementById('species_caja').style.display = 'block'
-        ocultar('errorspecies')
-        setspecies_caja(species)
-
-
-        document.getElementById('description_caja').style.display = 'block'
-        ocultar('errordescription')
-        setdescription_caja(description)
-
-        document.getElementById('soil_caja').style.display = 'block'
-        ocultar('errorsoil')
-        setsoil_caja(soil)
-
-        document.getElementById('temperature_caja').style.display = 'block'
-        ocultar('errortemperature')
-        settemperature_caja(temperature)
-
-        document.getElementById('sun_caja').style.display = 'block'
-        ocultar('errorsun')
-        setsun_caja(sun)
-
-        document.getElementById('water_caja').style.display = 'block'
-        ocultar('errorwater')
-        setwater_caja(water)
-
-        document.getElementById('multiplication_caja').style.display = 'block'
-        ocultar('errormultiplication')
-        setmultiplication_caja(multiplication)
-
-        document.getElementById('foto').style.display = 'block'
-    }
-
-
-
-
-    const stadeReadonly = (stade) => {
-        document.getElementById('caja_nombre').readOnly = stade
-        document.getElementById('species_caja').readOnly = stade
-        document.getElementById('description_caja').readOnly = stade
-        document.getElementById('soil_caja').readOnly = stade
-        document.getElementById('temperature_caja').readOnly = stade
-        document.getElementById('sun_caja').readOnly = stade
-        document.getElementById('water_caja').readOnly = stade
-        document.getElementById('multiplication_caja').readOnly = stade
-        document.getElementById('foto').readOnly = stade
-    }
-
-    const comprobarNombre = () => {
-        nombre_caja.length < 3 || nombre_caja.length > 20 ? mostrar('errorNombreCaja', 'El tamaño del nombre debe estar entre 3 y 20 caracteres') : ocultar('errorNombreCaja')
-        return 3 >= nombre_caja.length >= 20
-    }
-
-    const comprobarspecies_caja = () => {
-        species_caja.length < 3 || species_caja.length > 20 ? mostrar('errorspecies', 'El tamaño del species debe estar entre 3 y 20 caracteres') : ocultar('errorspecies')
-        return 3 >= species_caja.length >= 25
-    }
-
-    const comprobardescription_caja = () => {
-        description_caja.length < 25 || description_caja.length > 200 ? mostrar('errordescription', 'El tamaño de la descripción debe estar entre 25 y 200 caracteres') : ocultar('errordescription')
-        return 25 >= description_caja.length >= 200
-    }
-
-
-    const comprobarsoil_caja = () => {
-        soil_caja.length < 3 || soil_caja.length > 20 ? mostrar('errorsoil', 'El tamaño del soil debe estar entre 3 y 20 caracteres') : ocultar('errorsoil')
-        return 3 >= soil_caja.length >= 20
-    }
-    const comprobartemperature_caja = () => {
-        temperature_caja.length < 3 || temperature_caja.length > 20 ? mostrar('errortemperature', 'El tamaño de la temperature debe estar entre 3 y 20 caracteres') : ocultar('errortemperature')
-        return 3 >= temperature_caja.length >= 20
-    }
-    const comprobarsun_caja = () => {
-        sun_caja.length < 3 || sun_caja.length > 20 ? mostrar('errorsun', 'El tamaño del sun debe estar entre 3 y 20 caracteres') : ocultar('errorsun')
-        return 3 >= sun_caja.length >= 20
-    }
-    const comprobarwater_caja = () => {
-        water_caja.length < 3 || water_caja.length > 20 ? mostrar('errorwater', 'El tamaño del water debe estar entre 3 y 20 caracteres') : ocultar('errorwater')
-        return 3 >= water_caja.length >= 20
-    }
-    const comprobarmultiplication_caja = () => {
-        multiplication_caja.length < 3 || multiplication_caja.length > 20 ? mostrar('errormultiplication', 'El tamaño del multiplication debe estar entre 3 y 20 caracteres') : ocultar('errormultiplication')
-        return 3 >= multiplication_caja.length >= 20
-    }
-
 
     return (
 
         <div className='flex flex-col justify-center items-center h-[100vh] bg-black text-neutral-50'>
             <div className='bg-neutral-600 p-8 rounded-lg flex flex-col justify-between gap-4 items-center w-[50vw]'>
-                <header>Usuario : x (poner dp con el contexto)</header>
+                <header>Usuario : {email} (poner dp con el contexto)</header>
                 <button
                     className=' bg-neutral-400 p-2 rounded-lg  text-center hover:bg-neutral-300 transition duration-200 ease-in-out'
-                    onClick={() => addeditDelete('', '', '', '', '', '', '', '', '', 'add')}
+
                 >
-                    Añadir
+
+                    <Link
+                        to={
+                            "/Add"}
+                        state= {{ detail: "Some detail" }}
+
+                    >
+                        Navigate
+                    </Link>
                 </button>
+
+
+
+                <FormTable />
+
                 <div className='grid grid-cols-2 py-2.5 '>
                     <input
                         type='text'
@@ -223,159 +80,15 @@ const Menu = () => {
 
                 </div>
 
-                <form >
-                    <input
-                        type="text"
-                        id='caja_nombre'
-                        className='bg-neutral-500 my-3 p-2 border-separate  rounded-lg w-full text-center placeholder:text-neutral-50 text-neutral-50 outline-none'
-                        value={nombre_caja}
-                        style={{ display: 'none' }}
-                        placeholder='Nombre'
-                        name='caja_nombre'
-                        autoComplete='off'
-                        onChange={e => setnombre_caja(e.target.value)}
-                        onBlur={() => comprobarNombre()}
-                    >
-                    </input>
 
-                    <p id='errorNombreCaja' style={{ display: 'none' }} className='text-red-700 bg-zinc-300	border-2 rounded-md'></p>
-
-                    <input
-                        type="text"
-                        id='species_caja'
-                        className='bg-neutral-500 my-3 p-2 rounded-lg w-full text-center placeholder:text-neutral-50 text-neutral-50 outline-none'
-                        value={species_caja}
-                        style={{ display: 'none' }}
-                        placeholder='species'
-                        name='species_caja'
-                        autoComplete='off'
-                        onChange={e => setspecies_caja(e.target.value)}
-                        onBlur={() => comprobarspecies_caja()}
-                    >
-                    </input>
-
-                    <p id='errorspecies' style={{ display: 'none' }} className='text-red-700 bg-zinc-300	border-2 rounded-md'></p>
-
-                    <input
-                        type="text"
-                        id='description_caja'
-                        className='bg-neutral-500 my-3 p-2 rounded-lg w-full text-center placeholder:text-neutral-50 text-neutral-50 outline-none'
-                        value={description_caja}
-                        style={{ display: 'none' }}
-                        placeholder='description'
-                        name='description_caja'
-                        autoComplete='off'
-                        onChange={e => setdescription_caja(e.target.value)}
-                        onBlur={() => comprobardescription_caja()}
-                    >
-                    </input>
-
-                    <p id='errordescription' style={{ display: 'none' }} className='text-red-700 bg-zinc-300	border-2 rounded-md'></p>
-
-                    <input
-                        type="text"
-                        id='soil_caja'
-                        className='bg-neutral-500 my-3 p-2 rounded-lg w-full text-center placeholder:text-neutral-50 text-neutral-50 outline-none'
-                        value={soil_caja}
-                        style={{ display: 'none' }}
-                        placeholder='Soil'
-                        name='soil_caja'
-                        autoComplete='off'
-                        onChange={e => setsoil_caja(e.target.value)}
-                        onBlur={() => comprobarsoil_caja()}
-                    >
-                    </input>
-
-                    <p id='errorsoil' style={{ display: 'none' }} className='text-red-700 bg-zinc-300	border-2 rounded-md'></p>
-
-                    <input
-                        type="text"
-                        id='temperature_caja'
-                        className='bg-neutral-500 my-3 p-2 rounded-lg w-full text-center placeholder:text-neutral-50 text-neutral-50 outline-none'
-                        value={temperature_caja}
-                        style={{ display: 'none' }}
-                        placeholder='Temperature'
-                        name='temperature_caja'
-                        autoComplete='off'
-                        onChange={e => settemperature_caja(e.target.value)}
-                        onBlur={() => comprobartemperature_caja()}
-                    >
-                    </input>
-
-                    <p id='errortemperature' style={{ display: 'none' }} className='text-red-700 bg-zinc-300	border-2 rounded-md'></p>
-
-                    <input
-                        type="text"
-                        id='sun_caja'
-                        className='bg-neutral-500 my-3 p-2 rounded-lg w-full text-center placeholder:text-neutral-50 text-neutral-50 outline-none'
-                        value={sun_caja}
-                        style={{ display: 'none' }}
-                        placeholder='Sun'
-                        name='sun_caja'
-                        autoComplete='off'
-                        onChange={e => setsun_caja(e.target.value)}
-                        onBlur={() => comprobarsun_caja()}
-                    >
-                    </input>
-
-                    <p id='errorsun' style={{ display: 'none' }} className='text-red-700 bg-zinc-300	border-2 rounded-md'></p>
-
-                    <input
-                        type="text"
-                        id='water_caja'
-                        className='bg-neutral-500 my-3 p-2 rounded-lg w-full text-center placeholder:text-neutral-50 text-neutral-50 outline-none'
-                        value={water_caja}
-                        style={{ display: 'none' }}
-                        placeholder='Water'
-                        name='water_caja'
-                        autoComplete='off'
-                        onChange={e => setwater_caja(e.target.value)}
-                        onBlur={() => comprobarwater_caja()}
-                    >
-                    </input>
-
-                    <p id='errorwater' style={{ display: 'none' }} className='text-red-700 bg-zinc-300	border-2 rounded-md'></p>
-
-                    <input
-                        type="text"
-                        id='multiplication_caja'
-                        className='bg-neutral-500 my-3 p-2 rounded-lg w-full text-center placeholder:text-neutral-50 text-neutral-50 outline-none'
-                        value={multiplication_caja}
-                        style={{ display: 'none' }}
-                        placeholder='Multiplication'
-                        name='multiplication_caja'
-                        autoComplete='off'
-                        onChange={e => setmultiplication_caja(e.target.value)}
-                        onBlur={() => comprobarmultiplication_caja()}
-                    >
-                    </input>
-
-                    <p id='errormultiplication' style={{ display: 'none' }} className='text-red-700 bg-zinc-300	border-2 rounded-md'></p>
-
-                    <input
-                        type="file"
-                        id='foto'
-                        className='bg-neutral-500 my-3 p-2 rounded-lg w-full text-center placeholder:text-neutral-50 text-neutral-50 outline-none'
-                        accept="image/*"
-                        style={{ display: 'none' }}
-                        placeholder='foto'
-                        name='foto'
-                        autoComplete='off'
-
-                    >
-                    </input>
-
-                    <p id='errorNombreNuevo' style={{ display: 'none' }} className='text-red-700 bg-zinc-300	border-2 rounded-md'></p>
-
-                </form>
-                <button className=' bg-neutral-400 p-2 rounded-lg  text-center hover:bg-neutral-300 transition duration-200 ease-in-out' id='addButton' style={{ display: 'none' }} >Add</button>
                 <button className=' bg-neutral-400 p-2 rounded-lg  text-center hover:bg-neutral-300 transition duration-200 ease-in-out' id='editButton' style={{ display: 'none' }} >Edit</button>
                 <button className=' bg-neutral-400 p-2 rounded-lg  text-center hover:bg-neutral-300 transition duration-200 ease-in-out' id='deleteButton' style={{ display: 'none' }} >Delete</button>
 
+                {/*No c pq esto me lo marca como error, en otro lado hace igual y tb va, así q ni idea xddddd*/}
 
-                <Table data={plants}></Table>
+                <Table data={plants} plantsElementsInfo={plantsElementsInfo}></Table>
             </div>
-        </div>
+        </div >
     )
 
 }

@@ -14,19 +14,17 @@ const Inicio_sesion = () => {
   const [enterUse, setenterUse] = useState(0)
 
   useEffect(() => {
+    setEmail('diferenteEmail')
     enterUse == 1 ? navigate("/Menu") : null
     setenterUse(0)
     //eslint-disable-next-line react-hooks/exhaustive-deps
   }, [enterUse])
 
   const iniciarSesion = () => {
+    setEmail('diferenteEmail')
     setenterUse(1)
   }
 
-
-   const mostrar = (id) => {
-        document.getElementById(id).style.display = 'block'
-    }
 
   return (
     <div className="flex flex-col justify-center items-center h-[100vh] bg-black">
